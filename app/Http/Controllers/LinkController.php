@@ -28,17 +28,15 @@ class LinkController extends Controller
         $dto = $request->getDto();
         $link = $linkService->create($dto);
 
-        return back()->with('success_short_link', route('links.redirect', ['short' => $link->short_link]));
+        return back()->with('success_short_link', route('links.redirect', ['link' => $link]));
     }
 
     /**
-     * @param string $short
+     * @param Link $link
      * @return RedirectResponse
      */
-    public function redirect(string $short): RedirectResponse
+    public function redirect(Link $link): RedirectResponse
     {
-        $link = Link::where(['short_link' => $short])->firstOrFail();
-
         return redirect()->away($link->original_url);
     }
 }

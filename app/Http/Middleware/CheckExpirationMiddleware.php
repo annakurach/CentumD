@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Link;
 use Closure;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -20,9 +19,7 @@ class CheckExpirationMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $short = $request->route()->parameter('short');
-        $link = Link::where(['short_link' => $short])->firstOrFail();
-        if (!$link->expired_at->isFuture()) {
+        if (!$request->link->expired_at->isFuture()) {
             throw new NotFoundHttpException();
         }
 

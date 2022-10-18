@@ -20,6 +20,6 @@ Route::get('/', function () {
 
 Route::get('/links', [LinkController::class, 'show'])->name('links.show');
 Route::post('/links', [LinkController::class, 'create'])->name('links.create');
-Route::get('/links/{short}', [LinkController::class, 'redirect'])
+Route::get('/links/{link:short_link}', [LinkController::class, 'redirect'])
     ->middleware(['link.page_counter', 'link.expiration'])
     ->name('links.redirect');
